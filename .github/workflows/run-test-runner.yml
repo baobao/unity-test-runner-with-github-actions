@@ -8,10 +8,7 @@ on:
 jobs:
   editorTestJob:
     runs-on: ubuntu-latest
-    container: docker://gableroux/unity3d:${{ matrix.unity-tag }}
-    strategy:
-      matrix:
-        unity-tag: [2019.4.4f1]
+    container: docker://gableroux/unity3d:2019.4.4f1
 
     steps:
     # 復号化処理
