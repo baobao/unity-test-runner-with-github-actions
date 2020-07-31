@@ -25,7 +25,7 @@ jobs:
     # Unity起動とライセンス認証
     - run: /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2019.x.ulf -batchmode -nographics -quit || exit 0
     # TestRunnerを走らせ、結果(results.xm;)をpath/to/artifact/に出力
-    - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile path/to/artifact/results.xml || exit 0
+    - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile artifact/results.xml || exit 0
     # 成果物として出力する
     - uses: actions/upload-artifact@master
       with:
