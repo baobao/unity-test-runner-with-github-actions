@@ -16,6 +16,8 @@ jobs:
     steps:
     # 復号化処理
     - uses: actions/checkout@master
+    # 結果を出力するディレクトリ作成
+    - run: mkdir -p artifact
     # 暗号化したulfから復号化したulfを取り出す
     - run: openssl aes-256-cbc -d -in Unity_v2019.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2019.x.ulf
       env:
