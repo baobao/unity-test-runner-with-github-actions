@@ -14,8 +14,18 @@ jobs:
         unity-tag: [2019.4.4f1]
 
     steps:
+    # 復号化処理
     - uses: actions/checkout@master
+    # 暗号化したulfから復号化したulfを取り出す
     - run: openssl aes-256-cbc -d -in Unity_v2019.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2019.x.ulf
       env:
         CYPHER_KEY: ${{ secrets.cypherkey }}
-    - run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -manualLicenseFile /Unity_v2019.x.ulf || exit 0
+    # Unity起動とライセンス認証
+    - run: /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2019.x.ulf -batchmode -nographics -quit || exit 0
+    # TestRunnerを走らせ、結果(results.xm;)をpath/to/artifact/に出力
+    - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile path/to/artifact/results.xml || exit 0
+    # 成果物として出力する
+    - uses: actions/upload-artifact@master
+      with:
+        name: test-result
+        path: artifact
